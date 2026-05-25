@@ -1,0 +1,7 @@
+
+services:
+  frontend:
+    build:
+      context: ./frontend  # Docker buscará el Dockerfile dentro de esa carpeta
+    ports:
+      - "8080:80"
