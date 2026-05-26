@@ -61,3 +61,17 @@ JOIN public.bodegas b ON m."Id_Bodega" = b.id_bodega
 JOIN public.tarifas t ON m.id_tarifa = t.id_tarifa
 JOIN public.documentos d ON m.id_documento = d.id_documento
 JOIN public.movimientos mov ON m.id_contenedor = mov.id_contenedor;
+
+
+-- --------------------------------------------------------------------
+-- PARTE 4: ACTUALIZACIÓN PARA EL LOGIN (NUEVO)
+-- --------------------------------------------------------------------
+-- Esto asegura que la tabla usuarios tenga la columna contrasena y un admin de prueba
+ALTER TABLE public.usuarios 
+ADD COLUMN IF NOT EXISTS contrasena VARCHAR(255);
+
+INSERT INTO public.usuarios (email, rol, contrasena)
+VALUES ('admin@puerto.com', 'Administrador', '123456');
+
+-- Consultar para verificar los usuarios existentes
+SELECT * FROM public.usuarios;
