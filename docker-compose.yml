@@ -1,7 +1,31 @@
-
 services:
+  database:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: mi_usuario_seminario
+      POSTGRES_PASSWORD: mi_password_seguro
+      POSTGRES_DB: bd_seminario
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - red-seminario
+
   frontend:
-    build:
-      context: ./frontend  # Docker buscará el Dockerfile dentro de esa carpeta
+    image: nginx:alpine
     ports:
       - "8080:80"
+    networks:
+      - red-seminario
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:
+
+networks:
+  red-seminario:
+    driver: bridge
